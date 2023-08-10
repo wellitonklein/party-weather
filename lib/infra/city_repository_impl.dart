@@ -3,8 +3,6 @@ import 'package:uno/uno.dart';
 import '../domain/domain.dart';
 import 'mappers/mappers.dart';
 
-// https://api.openweathermap.org/geo/1.0/direct?q={{ Nome da cidade }}&limit=5&lang=pt_br&APPID={{ A SUA CHAVE DO SITE }}
-
 class CityRepositoryImpl implements CityRepository {
   final Uno client;
   final String url;
