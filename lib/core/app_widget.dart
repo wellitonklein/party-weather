@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../presentation/presentation.dart';
+
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
@@ -8,9 +10,10 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Party Weather',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-        useMaterial3: true,
+        useMaterial3: false,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
       ),
+      home: const ListOfCitiesPage(),
     );
   }
 }
