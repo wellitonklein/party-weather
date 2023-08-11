@@ -8,18 +8,6 @@
       "name": "party_weather",
       "request": "launch",
       "type": "dart"
-    },
-    {
-      "name": "party_weather (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "party_weather (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
     }
   ]
 }
