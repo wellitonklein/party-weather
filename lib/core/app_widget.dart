@@ -13,7 +13,11 @@ class AppWidget extends StatelessWidget {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
       ),
-      home: const ListOfCitiesPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const ListOfCitiesPage(),
+        '/weather-detail': (context) => const WeatherDetailPage(),
+      },
     );
   }
 }
