@@ -35,22 +35,30 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: BlocBuilder<ListOfCitiesBloc, ListOfCitiesState>(
+        child: BlocConsumer<ListOfCitiesBloc, ListOfCitiesState>(
           bloc: bloc,
+          listener: (context, state) {
+            if (state is CitySelectedState) {
+              Navigator.of(context).pushNamed(
+                '/weather-detail',
+                arguments: state.city,
+              );
+            }
+          },
           builder: (context, state) {
             void restartPage() {
-              bloc.add(ListOfCitiesRestarted());
+              bloc.add(RestartedEvent());
             }
 
             void searchText(String value) {
-              bloc.add(ListOfCitiesFieldChanged(value: value));
+              bloc.add(FieldChangedEvent(value: value));
             }
 
             void searched() {
-              bloc.add(ListOfCitiesSearched());
+              bloc.add(SearchedEvent());
             }
 
-            if (state is ListOfCitiesInitial) {
+            if ((state is InitialState) || (state is CitySelectedState)) {
               return Center(
                 child: SearchFieldWidget(
                   onChanged: searchText,
@@ -59,19 +67,22 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
               );
             }
 
-            if (state is ListOfCitiesLoading) {
+            if (state is LoadingState) {
               return const CityLoadingWidget();
             }
 
-            if (state is ListOfCitiesNotFound) {
+            if (state is NotFoundState) {
               return CityNotFoundWidget(restartPage: restartPage);
             }
 
-            if (state is ListOfCitiesDataFound) {
+            if (state is DataFoundState) {
               return CityListWidget(
                 cities: state.cities,
                 onChanged: searchText,
                 onPressed: searched,
+                onSelectCity: (cityId) {
+                  bloc.add(CitySelectedEvent(cityId: cityId));
+                },
               );
             }
 
