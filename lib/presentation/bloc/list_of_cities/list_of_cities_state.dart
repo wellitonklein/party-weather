@@ -7,30 +7,24 @@ sealed class ListOfCitiesState extends Equatable {
   List<Object> get props => [];
 }
 
-final class ListOfCitiesInitial extends ListOfCitiesState {}
+final class InitialState extends ListOfCitiesState {}
 
-final class ListOfCitiesLoading extends ListOfCitiesState {}
+final class LoadingState extends ListOfCitiesState {}
 
-final class ListOfCitiesNotFound extends ListOfCitiesState {}
+final class NotFoundState extends ListOfCitiesState {}
 
-final class ListOfCitiesDataFound extends ListOfCitiesState {
+final class DataFoundState extends ListOfCitiesState {
   final List<CityEntity> cities;
-  const ListOfCitiesDataFound({required this.cities});
+  const DataFoundState({required this.cities});
 
   @override
   List<Object> get props => [cities];
 }
 
+final class CitySelectedState extends ListOfCitiesState {
+  final CityEntity city;
+  const CitySelectedState({required this.city});
 
-// sealed class ListOfCitiesState extends Equatable {
-//   final List<CityEntity> cities;
-//   final bool isLoading;
-
-//   const ListOfCitiesState({
-//     required this.cities,
-//     required this.isLoading,
-//   });
-
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [city];
+}

@@ -15,30 +15,44 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
 
   ListOfCitiesBloc({
     required this.repository,
-  }) : super(ListOfCitiesInitial()) {
-    on<ListOfCitiesFieldChanged>((event, emit) {
-      searchText = event.value;
-    });
-
-    on<ListOfCitiesSearched>((event, emit) async {
-      emit(ListOfCitiesLoading());
+  }) : super(InitialState()) {
+    on<SearchedEvent>((event, emit) async {
+      emit(LoadingState());
 
       final response = await repository.searchByName(nameCity: searchText);
 
       if (response.isNotEmpty) {
         cities = response;
-        emit(ListOfCitiesDataFound(cities: response));
+        emit(DataFoundState(cities: response));
       } else {
-        emit(ListOfCitiesNotFound());
+        emit(NotFoundState());
       }
     });
 
-    on<ListOfCitiesCitySelected>((event, emit) {
-      citySelected = cities.firstWhere((city) => city.id == event.cityId);
+    on<SearchWithGeolocationEvent>((event, emit) async {
+      emit(LoadingState());
+
+      citySelected = await repository.searchByGeolocation();
+
+      if (citySelected != null) {
+        emit(CitySelectedState(city: citySelected!));
+      }
     });
 
-    on<ListOfCitiesRestarted>((event, emit) {
-      emit(ListOfCitiesInitial());
+    on<FieldChangedEvent>((event, emit) {
+      searchText = event.value;
+    });
+
+    on<CitySelectedEvent>((event, emit) {
+      citySelected = cities.firstWhere((city) => city.id == event.cityId);
+
+      if (citySelected != null) {
+        emit(CitySelectedState(city: citySelected!));
+      }
+    });
+
+    on<RestartedEvent>((event, emit) {
+      emit(InitialState());
     });
   }
 }
