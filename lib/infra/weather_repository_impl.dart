@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:uno/uno.dart';
 
 import '../domain/domain.dart';
@@ -32,7 +33,31 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   @override
   Future<WeatherEntity> searchByGeolocation() async {
-    // TODO: implement searchByGeolocation
-    throw UnimplementedError();
+    var serviceEnabled = false;
+    late LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception('GPS está desativado.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception(
+          'Precisar dar permissão para encontrar sua localização.',
+        );
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception(
+        'Permissão de localização negada permanentemente.',
+      );
+    }
+
+    final position = await Geolocator.getCurrentPosition();
+    return searchByLocation(lon: position.longitude, lat: position.latitude);
   }
 }
