@@ -10,8 +10,8 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Party Weather',
       theme: ThemeData(
-        useMaterial3: false,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.amber),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
       ),
       initialRoute: '/',
       routes: {
