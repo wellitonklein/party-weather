@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:uno/uno.dart';
 
+import '../core/core.dart';
 import '../domain/domain.dart';
 import 'mappers/mappers.dart';
 
@@ -16,16 +17,20 @@ class CityRepositoryImpl implements CityRepository {
   });
 
   @override
-  Future<List<CityEntity>> searchByName({required String nameCity}) async {
+  Future<Either<CityFailure, List<CityEntity>>> searchByName({
+    required String nameCity,
+  }) async {
     final response = await client.get(
       '$url/geo/1.0/direct?q=$nameCity&limit=5&lang=pt_br&APPID=$appId',
     );
 
     if (response.status == 200) {
-      return CityMapper.fromJson(response.data);
+      return Success(CityMapper.fromJson(response.data));
     }
 
-    throw Exception('Não foi possível encontrar a cidade.');
+    return Failure(
+      const UnexpectedCityFailure('Não foi possível encontrar a cidade.'),
+    );
   }
 
   @override
@@ -35,21 +40,21 @@ class CityRepositoryImpl implements CityRepository {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw Exception('GPS está desativado.');
+      throw const FormatException('GPS está desativado.');
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw Exception(
+        throw const FormatException(
           'Precisar dar permissão para encontrar sua localização.',
         );
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw Exception(
+      throw const FormatException(
         'Permissão de localização negada permanentemente.',
       );
     }

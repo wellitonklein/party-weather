@@ -29,66 +29,69 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lista de cidades'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: BlocConsumer<ListOfCitiesBloc, ListOfCitiesState>(
-          bloc: bloc,
-          listener: (context, state) {
-            if (state is CitySelectedState) {
-              Navigator.of(context).pushNamed(
-                '/weather-detail',
-                arguments: state.city,
-              );
-            }
-          },
-          builder: (context, state) {
-            void restartPage() {
-              bloc.add(RestartedEvent());
-            }
+    return SafeArea(
+      child: BlocConsumer<ListOfCitiesBloc, ListOfCitiesState>(
+        bloc: bloc,
+        listener: (context, state) {
+          if (state is CitySelectedState) {
+            Navigator.of(context).popAndPushNamed(
+              '/weather-detail',
+              arguments: state.city,
+            );
+          }
+        },
+        builder: (context, state) {
+          void restartPage() {
+            bloc.add(RestartedEvent());
+          }
 
-            void searchText(String value) {
-              bloc.add(FieldChangedEvent(value: value));
-            }
+          void searchText(String value) {
+            bloc.add(FieldChangedEvent(value: value));
+          }
 
-            void searched() {
-              bloc.add(SearchedEvent());
-            }
+          void searched() {
+            bloc.add(SearchedEvent());
+          }
 
-            if ((state is InitialState) || (state is CitySelectedState)) {
-              return Center(
-                child: SearchFieldWidget(
-                  onChanged: searchText,
-                  onPressed: searched,
-                ),
-              );
-            }
-
-            if (state is LoadingState) {
-              return const CityLoadingWidget();
-            }
-
-            if (state is NotFoundState) {
-              return CityNotFoundWidget(restartPage: restartPage);
-            }
-
-            if (state is DataFoundState) {
-              return CityListWidget(
-                cities: state.cities,
-                onChanged: searchText,
-                onPressed: searched,
-                onSelectCity: (cityId) {
-                  bloc.add(CitySelectedEvent(cityId: cityId));
+          return Scaffold(
+            floatingActionButton: Visibility(
+              visible: state is! FailureState,
+              child: FloatingActionButton(
+                tooltip: 'Sua posição atual',
+                child: const Icon(Icons.pin_drop_outlined),
+                onPressed: () {
+                  bloc.add(SearchWithGeolocationEvent());
                 },
-              );
-            }
-
-            return const SizedBox.shrink();
-          },
-        ),
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8),
+              child: switch (state) {
+                LoadingState() ||
+                CitySelectedState() =>
+                  const CityLoadingWidget(),
+                FailureState(:final errorMessage) => FailureWidget(
+                    errorMessage: errorMessage,
+                    restartPage: restartPage,
+                  ),
+                InitialState() => Center(
+                    child: SearchFieldWidget(
+                      onChanged: searchText,
+                      onPressed: searched,
+                    ),
+                  ),
+                DataFoundState(:final cities) => CityListWidget(
+                    cities: cities,
+                    onChanged: searchText,
+                    onPressed: searched,
+                    onSelectCity: (cityId) {
+                      bloc.add(CitySelectedEvent(cityId: cityId));
+                    },
+                  ),
+              },
+            ),
+          );
+        },
       ),
     );
   }

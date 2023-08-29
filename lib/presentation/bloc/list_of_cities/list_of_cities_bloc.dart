@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 
 part 'list_of_cities_event.dart';
@@ -21,21 +22,29 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
 
       final response = await repository.searchByName(nameCity: searchText);
 
-      if (response.isNotEmpty) {
-        cities = response;
-        emit(DataFoundState(cities: response));
-      } else {
-        emit(NotFoundState());
+      switch (response) {
+        case Failure(:final exception):
+          if (exception is UnexpectedCityFailure) {
+            emit(FailureState(exception.message));
+          }
+          break;
+        case Success(:final value):
+          cities = value;
+          emit(DataFoundState(cities: value));
       }
     });
 
     on<SearchWithGeolocationEvent>((event, emit) async {
       emit(LoadingState());
 
-      citySelected = await repository.searchByGeolocation();
+      try {
+        citySelected = await repository.searchByGeolocation();
 
-      if (citySelected != null) {
-        emit(CitySelectedState(city: citySelected!));
+        if (citySelected != null) {
+          emit(CitySelectedState(city: citySelected!));
+        }
+      } on FormatException catch (e) {
+        emit(FailureState(e.message));
       }
     });
 

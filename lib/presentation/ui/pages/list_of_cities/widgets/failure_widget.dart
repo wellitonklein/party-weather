@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CityNotFoundWidget extends StatelessWidget {
+class FailureWidget extends StatelessWidget {
+  final String errorMessage;
   final void Function() restartPage;
 
-  const CityNotFoundWidget({
+  const FailureWidget({
     super.key,
+    required this.errorMessage,
     required this.restartPage,
   });
 
@@ -16,7 +18,7 @@ class CityNotFoundWidget extends StatelessWidget {
       children: [
         const SizedBox.shrink(),
         Text(
-          'Nenhuma cidade encontrada',
+          errorMessage,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineMedium,
         ),

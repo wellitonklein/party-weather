@@ -40,7 +40,9 @@ class CityListWidget extends StatelessWidget {
                     onSelectCity(city.id);
                   },
                   title: Text(city.name),
-                  subtitle: Text('${city.state} - ${city.country}'),
+                  subtitle: city.state.isNotEmpty
+                      ? Text('${city.state} - ${city.country}')
+                      : null,
                   trailing: Image.network(
                     'https://openweathermap.org/images/flags/${city.country.toLowerCase()}.png',
                     errorBuilder: (context, error, stackTrace) {

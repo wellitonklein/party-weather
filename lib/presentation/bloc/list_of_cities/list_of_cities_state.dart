@@ -11,7 +11,10 @@ final class InitialState extends ListOfCitiesState {}
 
 final class LoadingState extends ListOfCitiesState {}
 
-final class NotFoundState extends ListOfCitiesState {}
+final class FailureState extends ListOfCitiesState {
+  final String errorMessage;
+  const FailureState(this.errorMessage);
+}
 
 final class DataFoundState extends ListOfCitiesState {
   final List<CityEntity> cities;
