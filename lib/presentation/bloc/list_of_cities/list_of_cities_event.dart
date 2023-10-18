@@ -1,30 +1,21 @@
 part of 'list_of_cities_bloc.dart';
 
-sealed class ListOfCitiesEvent extends Equatable {
-  const ListOfCitiesEvent();
+@freezed
+sealed class ListOfCitiesEvent with _$ListOfCitiesEvent {
+  const factory ListOfCitiesEvent.fieldChanged({
+    required String value,
+  }) = _FieldChanged;
 
-  @override
-  List<Object> get props => [];
+  const factory ListOfCitiesEvent.searched() = _Searched;
+
+  const factory ListOfCitiesEvent.citySelected({
+    required String cityId,
+  }) = _CitySelected;
+
+  const factory ListOfCitiesEvent.restarted() = _Restarted;
+
+  const factory ListOfCitiesEvent.searchWithGeolocation() =
+      _SearchWithGeolocation;
+
+  const ListOfCitiesEvent._();
 }
-
-final class FieldChangedEvent extends ListOfCitiesEvent {
-  final String value;
-
-  const FieldChangedEvent({
-    required this.value,
-  });
-}
-
-final class SearchedEvent extends ListOfCitiesEvent {}
-
-final class CitySelectedEvent extends ListOfCitiesEvent {
-  final String cityId;
-
-  const CitySelectedEvent({
-    required this.cityId,
-  });
-}
-
-final class RestartedEvent extends ListOfCitiesEvent {}
-
-final class SearchWithGeolocationEvent extends ListOfCitiesEvent {}

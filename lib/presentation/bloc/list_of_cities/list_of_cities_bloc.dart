@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/domain.dart';
@@ -17,57 +16,62 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
   ListOfCitiesBloc({
     required this.repository,
   }) : super(ListOfCitiesState.init()) {
-    on<SearchedEvent>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+    on<ListOfCitiesEvent>(onListOfCitiesEvent);
+  }
 
-      final response = await repository.searchByName(nameCity: searchText);
+  Future<void> onListOfCitiesEvent(
+    ListOfCitiesEvent event,
+    Emitter<ListOfCitiesState> emit,
+  ) {
+    return event.map(
+      fieldChanged: (e) async {
+        searchText = e.value;
+      },
+      searched: (e) async {
+        emit(state.copyWith(isLoading: true));
 
-      final newState = response.fold(
-        (newFailure) => state.copyWith(
-          failureOrCompanySelected: optionOf(left(newFailure)),
-        ),
-        (newCities) => state.copyWith(
-          cities: newCities,
-          failureOrCompanySelected: none(),
-        ),
-      );
+        final response = await repository.searchByName(nameCity: searchText);
 
-      emit(newState.copyWith(isLoading: false));
-    });
+        final newState = response.fold(
+          (newFailure) => state.copyWith(
+            failureOrCompanySelected: optionOf(left(newFailure)),
+          ),
+          (newCities) => state.copyWith(
+            cities: newCities,
+            failureOrCompanySelected: none(),
+          ),
+        );
 
-    on<SearchWithGeolocationEvent>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
+        emit(newState.copyWith(isLoading: false));
+      },
+      citySelected: (e) async {
+        final citySelected = state.cities.firstWhere(
+          (city) => city.id == e.cityId,
+        );
+        final newState = state.copyWith(
+          failureOrCompanySelected: optionOf(right(citySelected)),
+        );
+        emit(newState.copyWith(isLoading: false));
+      },
+      restarted: (e) async {
+        emit(ListOfCitiesState.init());
+      },
+      searchWithGeolocation: (e) async {
+        emit(state.copyWith(isLoading: true));
 
-      final response = await repository.searchByGeolocation();
+        final response = await repository.searchByGeolocation();
 
-      final newState = response.fold(
-        (newFailure) => state.copyWith(
-          failureOrCompanySelected: optionOf(left(newFailure)),
-        ),
-        (newCity) => state.copyWith(
-          failureOrCompanySelected: optionOf(right(newCity)),
-        ),
-      );
+        final newState = response.fold(
+          (newFailure) => state.copyWith(
+            failureOrCompanySelected: optionOf(left(newFailure)),
+          ),
+          (newCity) => state.copyWith(
+            failureOrCompanySelected: optionOf(right(newCity)),
+          ),
+        );
 
-      emit(newState.copyWith(isLoading: false));
-    });
-
-    on<FieldChangedEvent>((event, emit) {
-      searchText = event.value;
-    });
-
-    on<CitySelectedEvent>((event, emit) {
-      final citySelected = state.cities.firstWhere(
-        (city) => city.id == event.cityId,
-      );
-      final newState = state.copyWith(
-        failureOrCompanySelected: optionOf(right(citySelected)),
-      );
-      emit(newState.copyWith(isLoading: false));
-    });
-
-    on<RestartedEvent>((event, emit) {
-      emit(ListOfCitiesState.init());
-    });
+        emit(newState.copyWith(isLoading: false));
+      },
+    );
   }
 }

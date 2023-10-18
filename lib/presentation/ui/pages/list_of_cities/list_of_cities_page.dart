@@ -46,15 +46,15 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
         },
         builder: (context, state) {
           void restartPage() {
-            bloc.add(RestartedEvent());
+            bloc.add(const ListOfCitiesEvent.restarted());
           }
 
           void searchText(String value) {
-            bloc.add(FieldChangedEvent(value: value));
+            bloc.add(ListOfCitiesEvent.fieldChanged(value: value));
           }
 
           void searched() {
-            bloc.add(SearchedEvent());
+            bloc.add(const ListOfCitiesEvent.searched());
           }
 
           return Scaffold(
@@ -64,7 +64,7 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
                 tooltip: 'Sua posição atual',
                 child: const Icon(Icons.pin_drop_outlined),
                 onPressed: () {
-                  bloc.add(SearchWithGeolocationEvent());
+                  bloc.add(const ListOfCitiesEvent.searchWithGeolocation());
                 },
               ),
             ),
@@ -82,7 +82,9 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
                           onChanged: searchText,
                           onPressed: searched,
                           onSelectCity: (cityId) {
-                            bloc.add(CitySelectedEvent(cityId: cityId));
+                            bloc.add(
+                              ListOfCitiesEvent.citySelected(cityId: cityId),
+                            );
                           },
                         ),
             ),
