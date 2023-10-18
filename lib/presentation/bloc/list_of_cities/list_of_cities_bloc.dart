@@ -11,8 +11,6 @@ part 'list_of_cities_bloc.freezed.dart';
 class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
   final CityRepository repository;
 
-  String searchText = '';
-
   ListOfCitiesBloc({
     required this.repository,
   }) : super(ListOfCitiesState.init()) {
@@ -25,12 +23,16 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
   ) {
     return event.map(
       fieldChanged: (e) async {
-        searchText = e.value;
+        emit(state.copyWith(searchText: e.value));
       },
       searched: (e) async {
+        if (state.searchText.isEmpty) return;
+
         emit(state.copyWith(isLoading: true));
 
-        final response = await repository.searchByName(nameCity: searchText);
+        final response = await repository.searchByName(
+          nameCity: state.searchText,
+        );
 
         final newState = response.fold(
           (newFailure) => state.copyWith(

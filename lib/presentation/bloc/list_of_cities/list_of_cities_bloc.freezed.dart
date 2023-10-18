@@ -767,6 +767,7 @@ abstract class _SearchWithGeolocation extends ListOfCitiesEvent {
 
 /// @nodoc
 mixin _$ListOfCitiesState {
+  String get searchText => throw _privateConstructorUsedError;
   List<CityEntity> get cities => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Option<Either<CityFailure, CityEntity>> get failureOrCompanySelected =>
@@ -784,7 +785,8 @@ abstract class $ListOfCitiesStateCopyWith<$Res> {
       _$ListOfCitiesStateCopyWithImpl<$Res, ListOfCitiesState>;
   @useResult
   $Res call(
-      {List<CityEntity> cities,
+      {String searchText,
+      List<CityEntity> cities,
       bool isLoading,
       Option<Either<CityFailure, CityEntity>> failureOrCompanySelected});
 }
@@ -802,11 +804,16 @@ class _$ListOfCitiesStateCopyWithImpl<$Res, $Val extends ListOfCitiesState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? searchText = null,
     Object? cities = null,
     Object? isLoading = null,
     Object? failureOrCompanySelected = null,
   }) {
     return _then(_value.copyWith(
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
       cities: null == cities
           ? _value.cities
           : cities // ignore: cast_nullable_to_non_nullable
@@ -832,7 +839,8 @@ abstract class _$$_ListOfCitiesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<CityEntity> cities,
+      {String searchText,
+      List<CityEntity> cities,
       bool isLoading,
       Option<Either<CityFailure, CityEntity>> failureOrCompanySelected});
 }
@@ -848,11 +856,16 @@ class __$$_ListOfCitiesStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? searchText = null,
     Object? cities = null,
     Object? isLoading = null,
     Object? failureOrCompanySelected = null,
   }) {
     return _then(_$_ListOfCitiesState(
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
       cities: null == cities
           ? _value._cities
           : cities // ignore: cast_nullable_to_non_nullable
@@ -873,12 +886,15 @@ class __$$_ListOfCitiesStateCopyWithImpl<$Res>
 
 class _$_ListOfCitiesState extends _ListOfCitiesState {
   const _$_ListOfCitiesState(
-      {required final List<CityEntity> cities,
+      {required this.searchText,
+      required final List<CityEntity> cities,
       required this.isLoading,
       required this.failureOrCompanySelected})
       : _cities = cities,
         super._();
 
+  @override
+  final String searchText;
   final List<CityEntity> _cities;
   @override
   List<CityEntity> get cities {
@@ -894,7 +910,7 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
 
   @override
   String toString() {
-    return 'ListOfCitiesState(cities: $cities, isLoading: $isLoading, failureOrCompanySelected: $failureOrCompanySelected)';
+    return 'ListOfCitiesState(searchText: $searchText, cities: $cities, isLoading: $isLoading, failureOrCompanySelected: $failureOrCompanySelected)';
   }
 
   @override
@@ -902,6 +918,8 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ListOfCitiesState &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText) &&
             const DeepCollectionEquality().equals(other._cities, _cities) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
@@ -913,6 +931,7 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      searchText,
       const DeepCollectionEquality().hash(_cities),
       isLoading,
       failureOrCompanySelected);
@@ -927,12 +946,15 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
 
 abstract class _ListOfCitiesState extends ListOfCitiesState {
   const factory _ListOfCitiesState(
-      {required final List<CityEntity> cities,
+      {required final String searchText,
+      required final List<CityEntity> cities,
       required final bool isLoading,
       required final Option<Either<CityFailure, CityEntity>>
           failureOrCompanySelected}) = _$_ListOfCitiesState;
   const _ListOfCitiesState._() : super._();
 
+  @override
+  String get searchText;
   @override
   List<CityEntity> get cities;
   @override

@@ -32,6 +32,7 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
     return SafeArea(
       child: BlocConsumer<ListOfCitiesBloc, ListOfCitiesState>(
         bloc: bloc,
+        listenWhen: (_, c) => c.failureOrCompanySelected.isSome(),
         listener: (context, state) {
           state.failureOrCompanySelected.fold(
             () => null,
@@ -43,6 +44,9 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
               ),
             ),
           );
+        },
+        buildWhen: (p, c) {
+          return (p.isLoading != c.isLoading) || (p.hasFailure != c.hasFailure);
         },
         builder: (context, state) {
           void restartPage() {
