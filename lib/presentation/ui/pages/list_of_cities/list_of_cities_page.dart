@@ -33,12 +33,16 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
       child: BlocConsumer<ListOfCitiesBloc, ListOfCitiesState>(
         bloc: bloc,
         listener: (context, state) {
-          if (state is CitySelectedState) {
-            Navigator.of(context).popAndPushNamed(
-              '/weather-detail',
-              arguments: state.city,
-            );
-          }
+          state.failureOrCompanySelected.fold(
+            () => null,
+            (failureOrCity) => failureOrCity.fold(
+              (_) => null,
+              (city) => Navigator.of(context).popAndPushNamed(
+                '/weather-detail',
+                arguments: city,
+              ),
+            ),
+          );
         },
         builder: (context, state) {
           void restartPage() {
@@ -55,7 +59,7 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
 
           return Scaffold(
             floatingActionButton: Visibility(
-              visible: state is! FailureState,
+              visible: !state.hasFailure,
               child: FloatingActionButton(
                 tooltip: 'Sua posição atual',
                 child: const Icon(Icons.pin_drop_outlined),
@@ -66,29 +70,21 @@ class _ListOfCitiesPageState extends State<ListOfCitiesPage> {
             ),
             body: Padding(
               padding: const EdgeInsets.all(8),
-              child: switch (state) {
-                LoadingState() ||
-                CitySelectedState() =>
-                  const CityLoadingWidget(),
-                FailureState(:final errorMessage) => FailureWidget(
-                    errorMessage: errorMessage,
-                    restartPage: restartPage,
-                  ),
-                InitialState() => Center(
-                    child: SearchFieldWidget(
-                      onChanged: searchText,
-                      onPressed: searched,
-                    ),
-                  ),
-                DataFoundState(:final cities) => CityListWidget(
-                    cities: cities,
-                    onChanged: searchText,
-                    onPressed: searched,
-                    onSelectCity: (cityId) {
-                      bloc.add(CitySelectedEvent(cityId: cityId));
-                    },
-                  ),
-              },
+              child: state.isLoading
+                  ? const CityLoadingWidget()
+                  : state.hasFailure
+                      ? FailureWidget(
+                          errorMessage: state.errorMessage,
+                          restartPage: restartPage,
+                        )
+                      : CityListWidget(
+                          cities: state.cities,
+                          onChanged: searchText,
+                          onPressed: searched,
+                          onSelectCity: (cityId) {
+                            bloc.add(CitySelectedEvent(cityId: cityId));
+                          },
+                        ),
             ),
           );
         },

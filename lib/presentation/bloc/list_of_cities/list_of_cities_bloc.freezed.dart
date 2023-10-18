@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ListOfCitiesState {
   List<CityEntity> get cities => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  dynamic get failureOrCompany => throw _privateConstructorUsedError;
+  Option<Either<CityFailure, CityEntity>> get failureOrCompanySelected =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ListOfCitiesStateCopyWith<ListOfCitiesState> get copyWith =>
@@ -32,7 +33,9 @@ abstract class $ListOfCitiesStateCopyWith<$Res> {
       _$ListOfCitiesStateCopyWithImpl<$Res, ListOfCitiesState>;
   @useResult
   $Res call(
-      {List<CityEntity> cities, bool isLoading, dynamic failureOrCompany});
+      {List<CityEntity> cities,
+      bool isLoading,
+      Option<Either<CityFailure, CityEntity>> failureOrCompanySelected});
 }
 
 /// @nodoc
@@ -50,7 +53,7 @@ class _$ListOfCitiesStateCopyWithImpl<$Res, $Val extends ListOfCitiesState>
   $Res call({
     Object? cities = null,
     Object? isLoading = null,
-    Object? failureOrCompany = freezed,
+    Object? failureOrCompanySelected = null,
   }) {
     return _then(_value.copyWith(
       cities: null == cities
@@ -61,10 +64,10 @@ class _$ListOfCitiesStateCopyWithImpl<$Res, $Val extends ListOfCitiesState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      failureOrCompany: freezed == failureOrCompany
-          ? _value.failureOrCompany
-          : failureOrCompany // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      failureOrCompanySelected: null == failureOrCompanySelected
+          ? _value.failureOrCompanySelected
+          : failureOrCompanySelected // ignore: cast_nullable_to_non_nullable
+              as Option<Either<CityFailure, CityEntity>>,
     ) as $Val);
   }
 }
@@ -78,7 +81,9 @@ abstract class _$$_ListOfCitiesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<CityEntity> cities, bool isLoading, dynamic failureOrCompany});
+      {List<CityEntity> cities,
+      bool isLoading,
+      Option<Either<CityFailure, CityEntity>> failureOrCompanySelected});
 }
 
 /// @nodoc
@@ -94,7 +99,7 @@ class __$$_ListOfCitiesStateCopyWithImpl<$Res>
   $Res call({
     Object? cities = null,
     Object? isLoading = null,
-    Object? failureOrCompany = freezed,
+    Object? failureOrCompanySelected = null,
   }) {
     return _then(_$_ListOfCitiesState(
       cities: null == cities
@@ -105,9 +110,10 @@ class __$$_ListOfCitiesStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      failureOrCompany: freezed == failureOrCompany
-          ? _value.failureOrCompany!
-          : failureOrCompany,
+      failureOrCompanySelected: null == failureOrCompanySelected
+          ? _value.failureOrCompanySelected
+          : failureOrCompanySelected // ignore: cast_nullable_to_non_nullable
+              as Option<Either<CityFailure, CityEntity>>,
     ));
   }
 }
@@ -118,7 +124,7 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
   const _$_ListOfCitiesState(
       {required final List<CityEntity> cities,
       required this.isLoading,
-      required this.failureOrCompany})
+      required this.failureOrCompanySelected})
       : _cities = cities,
         super._();
 
@@ -133,11 +139,11 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
   @override
   final bool isLoading;
   @override
-  final dynamic failureOrCompany;
+  final Option<Either<CityFailure, CityEntity>> failureOrCompanySelected;
 
   @override
   String toString() {
-    return 'ListOfCitiesState(cities: $cities, isLoading: $isLoading, failureOrCompany: $failureOrCompany)';
+    return 'ListOfCitiesState(cities: $cities, isLoading: $isLoading, failureOrCompanySelected: $failureOrCompanySelected)';
   }
 
   @override
@@ -148,8 +154,9 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
             const DeepCollectionEquality().equals(other._cities, _cities) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            const DeepCollectionEquality()
-                .equals(other.failureOrCompany, failureOrCompany));
+            (identical(
+                    other.failureOrCompanySelected, failureOrCompanySelected) ||
+                other.failureOrCompanySelected == failureOrCompanySelected));
   }
 
   @override
@@ -157,7 +164,7 @@ class _$_ListOfCitiesState extends _ListOfCitiesState {
       runtimeType,
       const DeepCollectionEquality().hash(_cities),
       isLoading,
-      const DeepCollectionEquality().hash(failureOrCompany));
+      failureOrCompanySelected);
 
   @JsonKey(ignore: true)
   @override
@@ -171,7 +178,8 @@ abstract class _ListOfCitiesState extends ListOfCitiesState {
   const factory _ListOfCitiesState(
       {required final List<CityEntity> cities,
       required final bool isLoading,
-      required final dynamic failureOrCompany}) = _$_ListOfCitiesState;
+      required final Option<Either<CityFailure, CityEntity>>
+          failureOrCompanySelected}) = _$_ListOfCitiesState;
   const _ListOfCitiesState._() : super._();
 
   @override
@@ -179,7 +187,7 @@ abstract class _ListOfCitiesState extends ListOfCitiesState {
   @override
   bool get isLoading;
   @override
-  dynamic get failureOrCompany;
+  Option<Either<CityFailure, CityEntity>> get failureOrCompanySelected;
   @override
   @JsonKey(ignore: true)
   _$$_ListOfCitiesStateCopyWith<_$_ListOfCitiesState> get copyWith =>

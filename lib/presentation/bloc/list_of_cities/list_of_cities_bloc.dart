@@ -24,11 +24,11 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
 
       final newState = response.fold(
         (newFailure) => state.copyWith(
-          failure: newFailure,
+          failureOrCompanySelected: optionOf(left(newFailure)),
         ),
         (newCities) => state.copyWith(
           cities: newCities,
-          failure: null,
+          failureOrCompanySelected: none(),
         ),
       );
 
@@ -42,11 +42,10 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
 
       final newState = response.fold(
         (newFailure) => state.copyWith(
-          failure: newFailure,
+          failureOrCompanySelected: optionOf(left(newFailure)),
         ),
         (newCity) => state.copyWith(
-          citySelected: newCity,
-          failure: null,
+          failureOrCompanySelected: optionOf(right(newCity)),
         ),
       );
 
@@ -58,12 +57,17 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
     });
 
     on<CitySelectedEvent>((event, emit) {
-      final newState = state.copyWith(
-        citySelected:
-            state.cities.firstWhere((city) => city.id == event.cityId),
+      final citySelected = state.cities.firstWhere(
+        (city) => city.id == event.cityId,
       );
-
+      final newState = state.copyWith(
+        failureOrCompanySelected: optionOf(right(citySelected)),
+      );
       emit(newState.copyWith(isLoading: false));
+    });
+
+    on<RestartedEvent>((event, emit) {
+      emit(ListOfCitiesState.init());
     });
   }
 }

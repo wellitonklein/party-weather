@@ -10,4 +10,11 @@ sealed class CityFailure with _$CityFailure {
   const factory CityFailure.unexpectedCityFailure({
     required String message,
   }) = _UnexpectedCityFailure;
+
+  String toMessage() {
+    return switch (this) {
+      _NotFoundCityFailure() => 'Nenhuma cidade encontrada',
+      _UnexpectedCityFailure(:final message) => message,
+    };
+  }
 }
