@@ -1,4 +1,6 @@
 {
     "dart.hotReloadOnSave": "never",
-    "dart.flutterHotReloadOnSave": "never"
+    "dart.flutterHotReloadOnSave": "never",
+    "dart.flutterSdkPath": "/home/welliton/.puro/envs/stable/flutter",
+    "dart.sdkPath": "/home/welliton/.puro/envs/stable/flutter/bin/cache/dart-sdk"
 }

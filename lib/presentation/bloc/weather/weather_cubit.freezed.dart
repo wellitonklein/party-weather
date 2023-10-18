@@ -19,7 +19,7 @@ mixin _$WeatherState {
   bool get isLoading => throw _privateConstructorUsedError;
   WeatherEntity get weather => throw _privateConstructorUsedError;
   CityEntity? get currentCity => throw _privateConstructorUsedError;
-  String? get failure => throw _privateConstructorUsedError;
+  WeatherFailure? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WeatherStateCopyWith<WeatherState> get copyWith =>
@@ -36,10 +36,11 @@ abstract class $WeatherStateCopyWith<$Res> {
       {bool isLoading,
       WeatherEntity weather,
       CityEntity? currentCity,
-      String? failure});
+      WeatherFailure? failure});
 
   $WeatherEntityCopyWith<$Res> get weather;
   $CityEntityCopyWith<$Res>? get currentCity;
+  $WeatherFailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -76,7 +77,7 @@ class _$WeatherStateCopyWithImpl<$Res, $Val extends WeatherState>
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as WeatherFailure?,
     ) as $Val);
   }
 
@@ -99,6 +100,18 @@ class _$WeatherStateCopyWithImpl<$Res, $Val extends WeatherState>
       return _then(_value.copyWith(currentCity: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $WeatherFailureCopyWith<$Res>? get failure {
+    if (_value.failure == null) {
+      return null;
+    }
+
+    return $WeatherFailureCopyWith<$Res>(_value.failure!, (value) {
+      return _then(_value.copyWith(failure: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -113,12 +126,14 @@ abstract class _$$_WeatherStateCopyWith<$Res>
       {bool isLoading,
       WeatherEntity weather,
       CityEntity? currentCity,
-      String? failure});
+      WeatherFailure? failure});
 
   @override
   $WeatherEntityCopyWith<$Res> get weather;
   @override
   $CityEntityCopyWith<$Res>? get currentCity;
+  @override
+  $WeatherFailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -153,7 +168,7 @@ class __$$_WeatherStateCopyWithImpl<$Res>
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as WeatherFailure?,
     ));
   }
 }
@@ -174,7 +189,7 @@ class _$_WeatherState implements _WeatherState {
   @override
   final CityEntity? currentCity;
   @override
-  final String? failure;
+  final WeatherFailure? failure;
 
   @override
   String toString() {
@@ -210,7 +225,7 @@ abstract class _WeatherState implements WeatherState {
       {required final bool isLoading,
       required final WeatherEntity weather,
       required final CityEntity? currentCity,
-      required final String? failure}) = _$_WeatherState;
+      required final WeatherFailure? failure}) = _$_WeatherState;
 
   @override
   bool get isLoading;
@@ -219,7 +234,7 @@ abstract class _WeatherState implements WeatherState {
   @override
   CityEntity? get currentCity;
   @override
-  String? get failure;
+  WeatherFailure? get failure;
   @override
   @JsonKey(ignore: true)
   _$$_WeatherStateCopyWith<_$_WeatherState> get copyWith =>

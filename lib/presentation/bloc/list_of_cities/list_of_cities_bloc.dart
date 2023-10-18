@@ -1,51 +1,56 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 
 part 'list_of_cities_event.dart';
 part 'list_of_cities_state.dart';
+part 'list_of_cities_bloc.freezed.dart';
 
 class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
   final CityRepository repository;
 
   String searchText = '';
-  List<CityEntity> cities = [];
-  CityEntity? citySelected;
 
   ListOfCitiesBloc({
     required this.repository,
-  }) : super(InitialState()) {
+  }) : super(ListOfCitiesState.init()) {
     on<SearchedEvent>((event, emit) async {
-      emit(LoadingState());
+      emit(state.copyWith(isLoading: true));
 
       final response = await repository.searchByName(nameCity: searchText);
 
-      switch (response) {
-        case Failure(:final exception):
-          if (exception is UnexpectedCityFailure) {
-            emit(FailureState(exception.message));
-          }
-          break;
-        case Success(:final value):
-          cities = value;
-          emit(DataFoundState(cities: value));
-      }
+      final newState = response.fold(
+        (newFailure) => state.copyWith(
+          failure: newFailure,
+        ),
+        (newCities) => state.copyWith(
+          cities: newCities,
+          failure: null,
+        ),
+      );
+
+      emit(newState.copyWith(isLoading: false));
     });
 
     on<SearchWithGeolocationEvent>((event, emit) async {
-      emit(LoadingState());
+      emit(state.copyWith(isLoading: true));
 
-      try {
-        citySelected = await repository.searchByGeolocation();
+      final response = await repository.searchByGeolocation();
 
-        if (citySelected != null) {
-          emit(CitySelectedState(city: citySelected!));
-        }
-      } on FormatException catch (e) {
-        emit(FailureState(e.message));
-      }
+      final newState = response.fold(
+        (newFailure) => state.copyWith(
+          failure: newFailure,
+        ),
+        (newCity) => state.copyWith(
+          citySelected: newCity,
+          failure: null,
+        ),
+      );
+
+      emit(newState.copyWith(isLoading: false));
     });
 
     on<FieldChangedEvent>((event, emit) {
@@ -53,15 +58,12 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
     });
 
     on<CitySelectedEvent>((event, emit) {
-      citySelected = cities.firstWhere((city) => city.id == event.cityId);
+      final newState = state.copyWith(
+        citySelected:
+            state.cities.firstWhere((city) => city.id == event.cityId),
+      );
 
-      if (citySelected != null) {
-        emit(CitySelectedState(city: citySelected!));
-      }
-    });
-
-    on<RestartedEvent>((event, emit) {
-      emit(InitialState());
+      emit(newState.copyWith(isLoading: false));
     });
   }
 }

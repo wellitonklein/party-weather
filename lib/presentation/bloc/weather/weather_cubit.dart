@@ -25,10 +25,19 @@ class WeatherCubit extends Cubit<WeatherState> {
       lat: city.lat,
     );
 
+    final newState = response.fold(
+      (newFailure) => state.copyWith(
+        failure: newFailure,
+      ),
+      (newWeather) => state.copyWith(
+        weather: newWeather,
+        failure: null,
+      ),
+    );
+
     emit(
-      state.copyWith(
+      newState.copyWith(
         isLoading: false,
-        weather: response,
         currentCity: city,
       ),
     );

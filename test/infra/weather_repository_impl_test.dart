@@ -87,22 +87,20 @@ void main() {
 
   test('deve retornar um MAP quando tiver sucesso da API', () async {
     final response = await sut.searchByLocation(lon: lon, lat: lat);
-    expect(response.temp, 23.0);
-    expect(response.minTemp, 25.93);
-    expect(response.maxTemp, 32.22);
+    final weather = response.getOrElse(WeatherEntity.init);
+    expect(weather.temp, 23.0);
+    expect(weather.minTemp, 25.93);
+    expect(weather.maxTemp, 32.22);
   });
 
   test(
-    'deve informar um [throw Exception] quando tiver falha da API',
+    'deve tratar com [WeatherFailure] quando tiver falha da API',
     () async {
       when(() => network.get(any())).thenAnswer(
         (_) async => unoResponse(statusCode: 500, data: {}),
       );
-
-      expect(
-        () async => sut.searchByLocation(lon: lon, lat: lat),
-        throwsException,
-      );
+      final response = await sut.searchByLocation(lon: lon, lat: lat);
+      expect(response.isLeft(), true);
     },
   );
 }

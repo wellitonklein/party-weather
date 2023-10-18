@@ -6,7 +6,7 @@ sealed class WeatherState with _$WeatherState {
     required bool isLoading,
     required WeatherEntity weather,
     required CityEntity? currentCity,
-    required String? failure,
+    required WeatherFailure? failure,
   }) = _WeatherState;
 
   factory WeatherState.init() {

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:uno/uno.dart';
 
 import '../domain/domain.dart';
@@ -15,7 +16,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
   });
 
   @override
-  Future<WeatherEntity> searchByLocation({
+  Future<Either<WeatherFailure, WeatherEntity>> searchByLocation({
     required double lon,
     required double lat,
   }) async {
@@ -24,9 +25,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
     );
 
     if (response.status == 200) {
-      return WeatherMapper.fromMap(response.data);
+      return right(WeatherMapper.fromMap(response.data));
     }
 
-    throw Exception('Não foi encontrado nenhuma previsão.');
+    return left(const WeatherFailure.notFoundWeatherFailure());
   }
 }
