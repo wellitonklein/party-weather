@@ -6,15 +6,19 @@ part 'city_failure.freezed.dart';
 sealed class CityFailure with _$CityFailure {
   const CityFailure._();
 
-  const factory CityFailure.notFoundCityFailure() = _NotFoundCityFailure;
-  const factory CityFailure.unexpectedCityFailure({
+  const factory CityFailure.searchEmpty() = _SearchEmpty;
+
+  const factory CityFailure.notFoundCity() = _NotFoundCity;
+
+  const factory CityFailure.unexpectedCity({
     required String message,
-  }) = _UnexpectedCityFailure;
+  }) = _UnexpectedCity;
 
   String toMessage() {
     return switch (this) {
-      _NotFoundCityFailure() => 'Nenhuma cidade encontrada',
-      _UnexpectedCityFailure(:final message) => message,
+      _SearchEmpty() => 'A pesquisa está em branco',
+      _NotFoundCity() => 'Nenhuma cidade encontrada',
+      _UnexpectedCity(:final message) => message,
     };
   }
 }

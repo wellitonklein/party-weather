@@ -26,8 +26,6 @@ class ListOfCitiesBloc extends Bloc<ListOfCitiesEvent, ListOfCitiesState> {
         emit(state.copyWith(searchText: e.value));
       },
       searched: (e) async {
-        if (state.searchText.isEmpty) return;
-
         emit(state.copyWith(isLoading: true));
 
         final response = await repository.searchByName(

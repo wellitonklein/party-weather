@@ -20,21 +20,29 @@ class CityRepositoryImpl implements CityRepository {
   Future<Either<CityFailure, List<CityEntity>>> searchByName({
     required String nameCity,
   }) async {
-    final response = await client.get(
-      '$url/geo/1.0/direct?q=$nameCity&limit=5&lang=pt_br&APPID=$appId',
-    );
-
-    final failureDefault = CityFailure.unexpectedCityFailure(
+    final failureDefault = CityFailure.unexpectedCity(
       message: 'Não foi possível encontrar a cidade: $nameCity',
     );
 
-    if (response.status == 200) {
-      final cities = CityMapper.fromJson(response.data);
-      if (cities.isNotEmpty) return right(cities);
-      return left(failureDefault);
-    }
+    try {
+      if (nameCity.isEmpty) {
+        return left(const CityFailure.searchEmpty());
+      }
 
-    return left(failureDefault);
+      final response = await client.get(
+        '$url/geo/1.0/direct?q=$nameCity&limit=5&lang=pt_br&APPID=$appId',
+      );
+
+      if (response.status == 200) {
+        final cities = CityMapper.fromJson(response.data);
+        if (cities.isNotEmpty) return right(cities);
+        return left(failureDefault);
+      }
+
+      return left(failureDefault);
+    } catch (_) {
+      return left(const CityFailure.notFoundCity());
+    }
   }
 
   @override
@@ -45,7 +53,7 @@ class CityRepositoryImpl implements CityRepository {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return left(
-        const CityFailure.unexpectedCityFailure(
+        const CityFailure.unexpectedCity(
           message: 'GPS está desativado.',
         ),
       );
@@ -56,7 +64,7 @@ class CityRepositoryImpl implements CityRepository {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         return left(
-          const CityFailure.unexpectedCityFailure(
+          const CityFailure.unexpectedCity(
             message: 'Precisar dar permissão para encontrar sua localização.',
           ),
         );
@@ -65,7 +73,7 @@ class CityRepositoryImpl implements CityRepository {
 
     if (permission == LocationPermission.deniedForever) {
       return left(
-        const CityFailure.unexpectedCityFailure(
+        const CityFailure.unexpectedCity(
           message: 'Permissão de localização negada permanentemente.',
         ),
       );

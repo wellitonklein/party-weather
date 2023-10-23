@@ -18,40 +18,45 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CityFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() notFoundCityFailure,
-    required TResult Function(String message) unexpectedCityFailure,
+    required TResult Function() searchEmpty,
+    required TResult Function() notFoundCity,
+    required TResult Function(String message) unexpectedCity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? notFoundCityFailure,
-    TResult? Function(String message)? unexpectedCityFailure,
+    TResult? Function()? searchEmpty,
+    TResult? Function()? notFoundCity,
+    TResult? Function(String message)? unexpectedCity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? notFoundCityFailure,
-    TResult Function(String message)? unexpectedCityFailure,
+    TResult Function()? searchEmpty,
+    TResult Function()? notFoundCity,
+    TResult Function(String message)? unexpectedCity,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotFoundCityFailure value) notFoundCityFailure,
-    required TResult Function(_UnexpectedCityFailure value)
-        unexpectedCityFailure,
+    required TResult Function(_SearchEmpty value) searchEmpty,
+    required TResult Function(_NotFoundCity value) notFoundCity,
+    required TResult Function(_UnexpectedCity value) unexpectedCity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult? Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult? Function(_SearchEmpty value)? searchEmpty,
+    TResult? Function(_NotFoundCity value)? notFoundCity,
+    TResult? Function(_UnexpectedCity value)? unexpectedCity,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult Function(_SearchEmpty value)? searchEmpty,
+    TResult Function(_NotFoundCity value)? notFoundCity,
+    TResult Function(_UnexpectedCity value)? unexpectedCity,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -76,35 +81,35 @@ class _$CityFailureCopyWithImpl<$Res, $Val extends CityFailure>
 }
 
 /// @nodoc
-abstract class _$$_NotFoundCityFailureCopyWith<$Res> {
-  factory _$$_NotFoundCityFailureCopyWith(_$_NotFoundCityFailure value,
-          $Res Function(_$_NotFoundCityFailure) then) =
-      __$$_NotFoundCityFailureCopyWithImpl<$Res>;
+abstract class _$$_SearchEmptyCopyWith<$Res> {
+  factory _$$_SearchEmptyCopyWith(
+          _$_SearchEmpty value, $Res Function(_$_SearchEmpty) then) =
+      __$$_SearchEmptyCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotFoundCityFailureCopyWithImpl<$Res>
-    extends _$CityFailureCopyWithImpl<$Res, _$_NotFoundCityFailure>
-    implements _$$_NotFoundCityFailureCopyWith<$Res> {
-  __$$_NotFoundCityFailureCopyWithImpl(_$_NotFoundCityFailure _value,
-      $Res Function(_$_NotFoundCityFailure) _then)
+class __$$_SearchEmptyCopyWithImpl<$Res>
+    extends _$CityFailureCopyWithImpl<$Res, _$_SearchEmpty>
+    implements _$$_SearchEmptyCopyWith<$Res> {
+  __$$_SearchEmptyCopyWithImpl(
+      _$_SearchEmpty _value, $Res Function(_$_SearchEmpty) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotFoundCityFailure extends _NotFoundCityFailure {
-  const _$_NotFoundCityFailure() : super._();
+class _$_SearchEmpty extends _SearchEmpty {
+  const _$_SearchEmpty() : super._();
 
   @override
   String toString() {
-    return 'CityFailure.notFoundCityFailure()';
+    return 'CityFailure.searchEmpty()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotFoundCityFailure);
+        (other.runtimeType == runtimeType && other is _$_SearchEmpty);
   }
 
   @override
@@ -113,30 +118,33 @@ class _$_NotFoundCityFailure extends _NotFoundCityFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() notFoundCityFailure,
-    required TResult Function(String message) unexpectedCityFailure,
+    required TResult Function() searchEmpty,
+    required TResult Function() notFoundCity,
+    required TResult Function(String message) unexpectedCity,
   }) {
-    return notFoundCityFailure();
+    return searchEmpty();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? notFoundCityFailure,
-    TResult? Function(String message)? unexpectedCityFailure,
+    TResult? Function()? searchEmpty,
+    TResult? Function()? notFoundCity,
+    TResult? Function(String message)? unexpectedCity,
   }) {
-    return notFoundCityFailure?.call();
+    return searchEmpty?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? notFoundCityFailure,
-    TResult Function(String message)? unexpectedCityFailure,
+    TResult Function()? searchEmpty,
+    TResult Function()? notFoundCity,
+    TResult Function(String message)? unexpectedCity,
     required TResult orElse(),
   }) {
-    if (notFoundCityFailure != null) {
-      return notFoundCityFailure();
+    if (searchEmpty != null) {
+      return searchEmpty();
     }
     return orElse();
   }
@@ -144,56 +152,167 @@ class _$_NotFoundCityFailure extends _NotFoundCityFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotFoundCityFailure value) notFoundCityFailure,
-    required TResult Function(_UnexpectedCityFailure value)
-        unexpectedCityFailure,
+    required TResult Function(_SearchEmpty value) searchEmpty,
+    required TResult Function(_NotFoundCity value) notFoundCity,
+    required TResult Function(_UnexpectedCity value) unexpectedCity,
   }) {
-    return notFoundCityFailure(this);
+    return searchEmpty(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult? Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult? Function(_SearchEmpty value)? searchEmpty,
+    TResult? Function(_NotFoundCity value)? notFoundCity,
+    TResult? Function(_UnexpectedCity value)? unexpectedCity,
   }) {
-    return notFoundCityFailure?.call(this);
+    return searchEmpty?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult Function(_SearchEmpty value)? searchEmpty,
+    TResult Function(_NotFoundCity value)? notFoundCity,
+    TResult Function(_UnexpectedCity value)? unexpectedCity,
     required TResult orElse(),
   }) {
-    if (notFoundCityFailure != null) {
-      return notFoundCityFailure(this);
+    if (searchEmpty != null) {
+      return searchEmpty(this);
     }
     return orElse();
   }
 }
 
-abstract class _NotFoundCityFailure extends CityFailure {
-  const factory _NotFoundCityFailure() = _$_NotFoundCityFailure;
-  const _NotFoundCityFailure._() : super._();
+abstract class _SearchEmpty extends CityFailure {
+  const factory _SearchEmpty() = _$_SearchEmpty;
+  const _SearchEmpty._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_UnexpectedCityFailureCopyWith<$Res> {
-  factory _$$_UnexpectedCityFailureCopyWith(_$_UnexpectedCityFailure value,
-          $Res Function(_$_UnexpectedCityFailure) then) =
-      __$$_UnexpectedCityFailureCopyWithImpl<$Res>;
+abstract class _$$_NotFoundCityCopyWith<$Res> {
+  factory _$$_NotFoundCityCopyWith(
+          _$_NotFoundCity value, $Res Function(_$_NotFoundCity) then) =
+      __$$_NotFoundCityCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_NotFoundCityCopyWithImpl<$Res>
+    extends _$CityFailureCopyWithImpl<$Res, _$_NotFoundCity>
+    implements _$$_NotFoundCityCopyWith<$Res> {
+  __$$_NotFoundCityCopyWithImpl(
+      _$_NotFoundCity _value, $Res Function(_$_NotFoundCity) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_NotFoundCity extends _NotFoundCity {
+  const _$_NotFoundCity() : super._();
+
+  @override
+  String toString() {
+    return 'CityFailure.notFoundCity()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_NotFoundCity);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() searchEmpty,
+    required TResult Function() notFoundCity,
+    required TResult Function(String message) unexpectedCity,
+  }) {
+    return notFoundCity();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? searchEmpty,
+    TResult? Function()? notFoundCity,
+    TResult? Function(String message)? unexpectedCity,
+  }) {
+    return notFoundCity?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? searchEmpty,
+    TResult Function()? notFoundCity,
+    TResult Function(String message)? unexpectedCity,
+    required TResult orElse(),
+  }) {
+    if (notFoundCity != null) {
+      return notFoundCity();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SearchEmpty value) searchEmpty,
+    required TResult Function(_NotFoundCity value) notFoundCity,
+    required TResult Function(_UnexpectedCity value) unexpectedCity,
+  }) {
+    return notFoundCity(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SearchEmpty value)? searchEmpty,
+    TResult? Function(_NotFoundCity value)? notFoundCity,
+    TResult? Function(_UnexpectedCity value)? unexpectedCity,
+  }) {
+    return notFoundCity?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SearchEmpty value)? searchEmpty,
+    TResult Function(_NotFoundCity value)? notFoundCity,
+    TResult Function(_UnexpectedCity value)? unexpectedCity,
+    required TResult orElse(),
+  }) {
+    if (notFoundCity != null) {
+      return notFoundCity(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NotFoundCity extends CityFailure {
+  const factory _NotFoundCity() = _$_NotFoundCity;
+  const _NotFoundCity._() : super._();
+}
+
+/// @nodoc
+abstract class _$$_UnexpectedCityCopyWith<$Res> {
+  factory _$$_UnexpectedCityCopyWith(
+          _$_UnexpectedCity value, $Res Function(_$_UnexpectedCity) then) =
+      __$$_UnexpectedCityCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_UnexpectedCityFailureCopyWithImpl<$Res>
-    extends _$CityFailureCopyWithImpl<$Res, _$_UnexpectedCityFailure>
-    implements _$$_UnexpectedCityFailureCopyWith<$Res> {
-  __$$_UnexpectedCityFailureCopyWithImpl(_$_UnexpectedCityFailure _value,
-      $Res Function(_$_UnexpectedCityFailure) _then)
+class __$$_UnexpectedCityCopyWithImpl<$Res>
+    extends _$CityFailureCopyWithImpl<$Res, _$_UnexpectedCity>
+    implements _$$_UnexpectedCityCopyWith<$Res> {
+  __$$_UnexpectedCityCopyWithImpl(
+      _$_UnexpectedCity _value, $Res Function(_$_UnexpectedCity) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -201,7 +320,7 @@ class __$$_UnexpectedCityFailureCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$_UnexpectedCityFailure(
+    return _then(_$_UnexpectedCity(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -212,22 +331,22 @@ class __$$_UnexpectedCityFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UnexpectedCityFailure extends _UnexpectedCityFailure {
-  const _$_UnexpectedCityFailure({required this.message}) : super._();
+class _$_UnexpectedCity extends _UnexpectedCity {
+  const _$_UnexpectedCity({required this.message}) : super._();
 
   @override
   final String message;
 
   @override
   String toString() {
-    return 'CityFailure.unexpectedCityFailure(message: $message)';
+    return 'CityFailure.unexpectedCity(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UnexpectedCityFailure &&
+            other is _$_UnexpectedCity &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -237,37 +356,39 @@ class _$_UnexpectedCityFailure extends _UnexpectedCityFailure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UnexpectedCityFailureCopyWith<_$_UnexpectedCityFailure> get copyWith =>
-      __$$_UnexpectedCityFailureCopyWithImpl<_$_UnexpectedCityFailure>(
-          this, _$identity);
+  _$$_UnexpectedCityCopyWith<_$_UnexpectedCity> get copyWith =>
+      __$$_UnexpectedCityCopyWithImpl<_$_UnexpectedCity>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() notFoundCityFailure,
-    required TResult Function(String message) unexpectedCityFailure,
+    required TResult Function() searchEmpty,
+    required TResult Function() notFoundCity,
+    required TResult Function(String message) unexpectedCity,
   }) {
-    return unexpectedCityFailure(message);
+    return unexpectedCity(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? notFoundCityFailure,
-    TResult? Function(String message)? unexpectedCityFailure,
+    TResult? Function()? searchEmpty,
+    TResult? Function()? notFoundCity,
+    TResult? Function(String message)? unexpectedCity,
   }) {
-    return unexpectedCityFailure?.call(message);
+    return unexpectedCity?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? notFoundCityFailure,
-    TResult Function(String message)? unexpectedCityFailure,
+    TResult Function()? searchEmpty,
+    TResult Function()? notFoundCity,
+    TResult Function(String message)? unexpectedCity,
     required TResult orElse(),
   }) {
-    if (unexpectedCityFailure != null) {
-      return unexpectedCityFailure(message);
+    if (unexpectedCity != null) {
+      return unexpectedCity(message);
     }
     return orElse();
   }
@@ -275,43 +396,45 @@ class _$_UnexpectedCityFailure extends _UnexpectedCityFailure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotFoundCityFailure value) notFoundCityFailure,
-    required TResult Function(_UnexpectedCityFailure value)
-        unexpectedCityFailure,
+    required TResult Function(_SearchEmpty value) searchEmpty,
+    required TResult Function(_NotFoundCity value) notFoundCity,
+    required TResult Function(_UnexpectedCity value) unexpectedCity,
   }) {
-    return unexpectedCityFailure(this);
+    return unexpectedCity(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult? Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult? Function(_SearchEmpty value)? searchEmpty,
+    TResult? Function(_NotFoundCity value)? notFoundCity,
+    TResult? Function(_UnexpectedCity value)? unexpectedCity,
   }) {
-    return unexpectedCityFailure?.call(this);
+    return unexpectedCity?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotFoundCityFailure value)? notFoundCityFailure,
-    TResult Function(_UnexpectedCityFailure value)? unexpectedCityFailure,
+    TResult Function(_SearchEmpty value)? searchEmpty,
+    TResult Function(_NotFoundCity value)? notFoundCity,
+    TResult Function(_UnexpectedCity value)? unexpectedCity,
     required TResult orElse(),
   }) {
-    if (unexpectedCityFailure != null) {
-      return unexpectedCityFailure(this);
+    if (unexpectedCity != null) {
+      return unexpectedCity(this);
     }
     return orElse();
   }
 }
 
-abstract class _UnexpectedCityFailure extends CityFailure {
-  const factory _UnexpectedCityFailure({required final String message}) =
-      _$_UnexpectedCityFailure;
-  const _UnexpectedCityFailure._() : super._();
+abstract class _UnexpectedCity extends CityFailure {
+  const factory _UnexpectedCity({required final String message}) =
+      _$_UnexpectedCity;
+  const _UnexpectedCity._() : super._();
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_UnexpectedCityFailureCopyWith<_$_UnexpectedCityFailure> get copyWith =>
+  _$$_UnexpectedCityCopyWith<_$_UnexpectedCity> get copyWith =>
       throw _privateConstructorUsedError;
 }
